@@ -10,6 +10,8 @@ class EventController {
         this.eventService = eventService;
     }
 
+   
+
     createEvent = async (req: Request, res: Response): Promise<void> => {
         try {
           const createEventDto: CreateEventDto = req.body;
@@ -47,6 +49,17 @@ class EventController {
           res.status(500).send({ error: error.message });
         }
       }
+
+      getEventsByCity = async (req: Request, res: Response): Promise<void> => {
+        try {
+          const { city } = req.params;
+          const events = await this.eventService.getEventsByCity(city);
+          res.status(200).json(events);
+        } catch (error: any) {
+          res.status(500).send({ error: error.message });
+        }
+      }
+
 }
 
 export default EventController;
